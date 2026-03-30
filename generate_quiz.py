@@ -4,33 +4,21 @@ import ollama
 from vector_engine import get_collection
 
 def generate_and_save_quiz(count=10):
-    print(f"--- Generating {count} Questions ---")
-    collection=get_collection()
+    collection = get_collection()
     all_data = collection.get()
     docs = all_data['documents']
     ids = all_data['ids']
     
     if not docs:
-        print("No data found in VectorDB. Run ingest.py first.")
-        return
+        return []
 
     quiz_bank = []
-    
-    # We loop to ensure we get exactly 10 questions
+    print(f"--- Generating {count} quiz questions from {len(docs)} document chunks ---")
     while len(quiz_bank) < count:
         indices = random.sample(range(len(docs)), min(len(docs), 2))
         selected_context = " ".join([docs[i] for i in indices])
         selected_ids = [ids[i] for i in indices]
 
-        system_instruction = (
-            "You are a professional exam coordinator. Your task is to generate high-quality, "
-            "unambiguous Multiple Choice Questions based ONLY on the provided text[cite: 20]. "
-            "STRICT RULES:\n"
-            "1. Only ONE option must be correct.\n"
-            "2. Distractors (wrong options) must be plausible but distinct; they must NOT overlap in meaning with the correct answer.\n"
-            "3. Return response in VALID JSON only.\n"
-            "4. Keys: 'question' (string), 'options' (list of 4 distinct strings), 'correct_answer' (single letter A, B, C, or D)."
-        )
         prompt = f"""
         ### CONTEXT:
         {selected_context}
@@ -51,22 +39,26 @@ def generate_and_save_quiz(count=10):
         "correct_answer": "A"
         }}
         """
+        system_instruction = (
+            "You are a professional exam coordinator. Your task is to generate high-quality, "
+            "unambiguous Multiple Choice Questions based ONLY on the provided text[cite: 20]. "
+            "STRICT RULES:\n"
+            "1. Only ONE option must be correct.\n"
+            "2. Distractors (wrong options) must be plausible but distinct; they must NOT overlap in meaning with the correct answer.\n"
+            "3. Return response in VALID JSON only.\n"
+            "4. Keys: 'question' (string), 'options' (list of 4 distinct strings), 'correct_answer' (single letter A, B, C, or D)."
+        )
 
         try:
-            response = ollama.generate(model='gemma3:1b', system=system_instruction, prompt=prompt, format="json")
+            response = ollama.generate(model='qwen2.5:3b', prompt=prompt, system=system_instruction, format="json")
             data = json.loads(response['response'])
-            
-            
-            # ADD THE CONTEXT HERE
             data['context_used'] = selected_ids
-            if data['question'] not in [q['question'] for q in quiz_bank]:
-                quiz_bank.append(data)
-        except Exception as e:
-            print(f"Generation error, retrying... {e}")
+            quiz_bank.append(data)
+        except:
+            continue
 
     with open('quiz_bank.json', 'w') as f:
         json.dump(quiz_bank, f, indent=4)
-    print("--- Quiz Bank Saved to quiz_bank.json ---")
-
-if __name__ == "__main__":
-    generate_and_save_quiz(10)
+    print(f"--- Quiz generation complete. {len(quiz_bank)} questions saved to quiz_bank.json ---")
+    
+    return quiz_bank
