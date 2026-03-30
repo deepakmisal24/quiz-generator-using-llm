@@ -1,65 +1,95 @@
-import fitz  # PyMuPDF
 import ollama
 import json
+from vector_engine import get_collection
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
 
-def ingest_pdf(file_path):
-    """Extraction: Reads the PDF and returns the text."""
-    print(f"--- Loading {file_path} ---")
-    with fitz.open(file_path) as doc:
-        text = " ".join([page.get_text() for page in doc])
-    return text
+app = FastAPI(title="F1 Quiz API")
 
-def generate_quiz(text_context):
-    """Generation: Creates questions based on the document."""
-    print("--- Generating Quiz Questions ---")
-    prompt = f"""
-    Based on the text below, generate Multiple Choice Questions.
-    Format your response exactly like this:
-    Q1: [Question]
-    A) [Option] B) [Option] C) [Option] D) [Option]
-    Correct: [Letter]
-    
-    TEXT: {text_context[:3000]} # Using a slice to stay within model limits
-    """
-    system_instruction = (
-        "You are a quiz creator. Return your response in VALID JSON only. "
-        "The JSON must have these keys: 'question', 'options' (a list of 4 strings), "
-        "and 'correct_answer' (the string content of the correct option)."
-    )
-    response = ollama.generate(model='gemma3:1b', system=system_instruction, prompt=prompt, format="json")
-    quiz_data = json.loads(response['response'])
-    return quiz_data
+# Data Models
+class AnswerRequest(BaseModel):
+    question: str
+    user_answer: str
+    correct_answer: str
+    context_refs: list
 
-def evaluate_answer(question, user_answer, correct_answer):
+def get_text_from_ids(chunk_ids):
+    """Retrieves the actual text from ChromaDB using the stored Reference IDs."""
+    collection = get_collection()
+    results = collection.get(ids=chunk_ids)
+    return " ".join(results['documents'])
+
+@app.get("/get-quiz")
+def get_quiz():
+    try:
+        with open('quiz_bank.json', 'r') as f:
+            return json.load(f)
+    except FileNotFoundError:
+        raise HTTPException(status_code=404, detail="Quiz bank not found. Run generate_quiz.py.")
+
+@app.post("/evaluate")
+def evaluate_answer(question, user_answer, correct_answer, selected_context):
     """Evaluation: Checks the user's input using the LLM for feedback."""
     print("--- Evaluating your Answer ---")
+    is_correct = user_answer.upper() == correct_answer.upper()
+    verdict = "CORRECT" if is_correct else "INCORRECT"
     prompt = f"""
-    The question was: {question}
-    The user answered: {user_answer}
-    The correct answer is: {correct_answer}
+    STRICT COMPARISON TASK:
+    1. Target Letter: {correct_answer}
+    2. User Provided: {user_answer}
     
-    Briefly explain if the user is right or wrong and why in 2-3 sentences.
+    COMPARE: Does {user_answer} match {correct_answer}?
+    
+    Provide feedback in this format:
+    VERDICT: {verdict}
+    EXPLANATION: [Provide a brief explanation (max 2 sentences) that cites the specific fact from the 
+    {selected_context} above that proves why {correct_answer} is the right answer.]
     """
-    response = ollama.generate(model='gemma3:1b', prompt=prompt)
-    return response['response']
+
+    system_instruction = (
+        "You are a strict grading logic assistant. "
+        "Compare the 'User Provided' letter to the 'Target Letter'. "
+        "If they are different letters, the verdict MUST be 'INCORRECT'. "
+        "Be concise and do not hallucinate."
+        "You are a factual auditor. Your only job is to explain a quiz answer "
+        "using ONLY the provided context. Do not use outside knowledge. "
+        "If the information is not in the context, say 'Information not available in text'."
+    )
+    response = ollama.generate(model='gemma3:1b', system=system_instruction, prompt=prompt)
+    return verdict,response['response']
+
+
+def run_quiz():
+    try:
+        with open('quiz_bank.json', 'r') as f:
+            quiz_bank = json.load(f)
+    except FileNotFoundError:
+        print("Error: No quiz bank found. Run generate_quiz.py first.")
+        return
+
+    score = 0
+    for i, item in enumerate(quiz_bank):
+        print(f"\n--- Question {i+1} of {len(quiz_bank)} ---")
+        print(item['question'])
+        for idx, opt in enumerate(item['options']):
+            print(f"{chr(65+idx)}) {opt}")
+        
+        user_choice = ""
+        while user_choice not in ['A', 'B', 'C', 'D']:
+            user_choice = input("\nYour Answer (A, B, C, D): ").upper()
+        context_used = get_text_from_ids(item['context_used'])
+        verdict, feedback = evaluate_answer(item['question'], user_choice, item['correct_answer'], context_used)
+        
+        if verdict == "CORRECT":
+            score += 1
+            print("✅ CORRECT!")
+        else:
+            print(f"❌ INCORRECT. The right answer was {item['correct_answer']}.")
+        
+        print(f"Feedback: {feedback}")
+        print(f"Current Score: {score}/{i+1}")
+        input("\nPress Enter for the next question...")
+
 
 if __name__ == "__main__":
-    # 1. Ingestion
-    content = ingest_pdf("Formula1_Overview.pdf")
-    
-    # 2. Question Generation
-    quiz_output = generate_quiz(content)
-    print("\n" + json.dumps(quiz_output, indent=2) + "\n")
-    
-    # 3. Simple Interaction (Manual Input)
-    print("Question:", quiz_output['question'])
-    print("Options:")
-    for idx, option in enumerate(quiz_output['options']):
-        print(f"{chr(65 + idx)}) {option}")
-    user_input = input("Enter your answer for Q1 (e.g., A): ")
-    
-    # Note: In a real app, we would parse the 'Correct' letter from the LLM output.
-    # For this simple version, let's just show how evaluation works.
-    feedback = evaluate_answer(quiz_output['question'], user_input.upper(), quiz_output['correct_answer'])
-    print("\nFeedback:\n", feedback)
-    
+    run_quiz()
