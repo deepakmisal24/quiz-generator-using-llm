@@ -9,7 +9,7 @@ An automated, AI-driven pipeline designed to transform complex documents into in
 
 ## DEMO
 
-![Project Demo link](https://youtu.be/uePcjf5rI2c)
+[Project Demo link](https://youtu.be/uePcjf5rI2c)
 
 ---
 
