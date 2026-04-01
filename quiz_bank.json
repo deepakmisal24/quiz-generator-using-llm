@@ -1,118 +1,62 @@
 [
     {
-        "question": "In the 2026 F1 season, what percentage of total output exceeds 1,000 horsepower when using sustainable fuels?",
+        "question": "In F1, the power unit (PU) architecture by 2026 includes a hybrid system with which of the following components?",
         "options": [
-            "50%",
-            "70%",
-            "80%",
-            "100%"
+            "ICE and MGU-K",
+            "TC and ES",
+            "CE and Halo",
+            "Base and X-Mode"
         ],
-        "correct_answer": "D",
+        "correct_answer": "A",
         "context_used": [
-            "uploads\\Formula1_2026_Overview.pdf_1",
-            "uploads\\Formula1_2026_Overview.pdf_0"
+            "uploads\\F1_Training_Dataset_Clean.pdf_0",
+            "uploads\\F1_Training_Dataset_Clean.pdf_1"
         ]
     },
     {
-        "question": "The 2026 Formula 1 cars feature a key change in weight, which is now set to be reduced to:",
+        "question": "What component in F1 cars is responsible for recovering energy from braking and providing additional propulsion by 2026?",
         "options": [
-            "758kg",
-            "768kg",
-            "778kg",
-            "788kg"
+            "Turbocharger (TC)",
+            "MGU-K (Motor Generator Unit - Kinetic)",
+            "ES (Energy Store) High-voltage lithium-ion battery pack",
+            "CE (Control Electronics)"
         ],
         "correct_answer": "B",
         "context_used": [
-            "uploads\\Formula1_2026_Overview.pdf_1",
-            "uploads\\Formula1_2026_Overview.pdf_0"
+            "uploads\\F1_Training_Dataset_Clean.pdf_1",
+            "uploads\\F1_Training_Dataset_Clean.pdf_0"
         ]
     },
     {
-        "question": "Which team does not have any titles in the 2026 constructors & engines section of Formula 1 as per the official overview?",
+        "question": "What does the MGU-K (Motor Generator Unit - Kinetic) provide in F1 cars by 2026?",
         "options": [
-            "Atlassian Williams",
-            "McLaren F1",
-            "Cadillac F1",
-            "Audi F1 Team"
-        ],
-        "correct_answer": "C",
-        "context_used": [
-            "uploads\\Formula1_2026_Overview.pdf_1",
-            "uploads\\Formula1_2026_Overview.pdf_0"
-        ]
-    },
-    {
-        "question": "What color represents the fastest tyre compound according to Pirelli's specifications in the 2026 F1 era?",
-        "options": [
-            "Red",
-            "Yellow",
-            "White",
-            "Blue"
+            "350kW (approx. 470hp) of additional propulsion",
+            "A turbocharged engine limited to 15,000 RPM",
+            "High-voltage lithium-ion battery pack storing recovered energy",
+            "Active aerodynamics adjustments"
         ],
         "correct_answer": "A",
         "context_used": [
-            "uploads\\Formula1_2026_Overview.pdf_0",
-            "uploads\\Formula1_2026_Overview.pdf_1"
+            "uploads\\F1_Training_Dataset_Clean.pdf_1",
+            "uploads\\F1_Training_Dataset_Clean.pdf_0"
         ]
     },
     {
-        "question": "The 2026 Formula 1 cars are designed to be 'nimbler'. Which of the following changes does this include?\na) Reducing the car's weight\nb) Shortening the wheelbase\nc) Introducing X-Mode and Z-Mode aerodynamic systems\nd) Narrowing the width of the car",
+        "question": "In F1 cars, the Power Unit (PU) hybrid system by 2026 includes a power split of _____% Internal Combustion and _____% Electrical.",
         "options": [
-            "a)",
-            "b)",
-            "c)",
-            "d)"
-        ],
-        "correct_answer": "b",
-        "context_used": [
-            "uploads\\Formula1_2026_Overview.pdf_1",
-            "uploads\\Formula1_2026_Overview.pdf_0"
-        ]
-    },
-    {
-        "question": "The 2026 Formula 1 cars are designed to be 'nimbler'. Which of the following changes includes a reduction in minimum weight for these cars compared to previous seasons? ",
-        "options": [
-            "Option A: The weight is reduced to 768kg",
-            "Option B: The wheelbase lengthened by 200mm",
-            "Option C: The tire compounds changed from red, yellow, and white to green, blue, and orange",
-            "Option D: The output of the hybrid power unit decreased"
+            "50-50",
+            "75-25",
+            "80-20",
+            "90-10"
         ],
         "correct_answer": "A",
         "context_used": [
-            "uploads\\Formula1_2026_Overview.pdf_0",
-            "uploads\\Formula1_2026_Overview.pdf_1"
+            "uploads\\F1_Training_Dataset_Clean.pdf_0",
+            "uploads\\F1_Training_Dataset_Clean.pdf_1"
         ]
     },
     {
-        "question": "The 2026 F1 cars are designed to be 'nimbler' with which of the following changes in weight, dimensions, and active aero compared to previous models? \na) Weight: Increased by 8kg, Dimensions: Unchanged, Active Aero: Replaced DRS with X-Mode b) Weight: Reduced to 768kg, Dimensions: 200mm Shorter Wheelbase & 100mm Narrower Width, Active Aero: X-Mode and Z-Mode c) Weight: Increased by 50kg, Dimensions: 150mm Longer Wheelbase & 50mm Wider Width, Active Aero: Replaced DRS with Y-Mode d) Weight: Reduced to 800kg, Dimensions: 100mm Shorter Wheelbase & 200mm Narrower Width, Active Aero: Added Y-Mode",
-        "options": [
-            "a)",
-            "b)",
-            "c)",
-            "d)"
-        ],
-        "correct_answer": "B",
-        "context_used": [
-            "uploads\\Formula1_2026_Overview.pdf_0",
-            "uploads\\Formula1_2026_Overview.pdf_1"
-        ]
-    },
-    {
-        "question": "Which team has the highest number of titles in Formula 1 for the 2026 season as per the text?",
-        "options": [
-            "Scuderia Ferrari",
-            "Atlassian Williams",
-            "McLaren F1",
-            "Red Bull Racing"
-        ],
-        "correct_answer": "A",
-        "context_used": [
-            "uploads\\Formula1_2026_Overview.pdf_0",
-            "uploads\\Formula1_2026_Overview.pdf_1"
-        ]
-    },
-    {
-        "question": "In the 2026 Formula 1 season, which team has the most championships (titles) for their engine partner in Formula One racing? A) Atlassian Williams B) McLaren F1 C) Mercedes-AMG D) Red Bull Racing",
+        "question": "What is the purpose of the World Constructors' Championship (WCC) in Formula 1 racing?\nA) To award points to individual drivers based on their performance\nB) To determine which team has the best overall performance across both car constructors over a season\nC) To decide who gets to design and build the race cars independently of any other aspect\nD) To recognize the fastest lap times in all races",
         "options": [
             "A",
             "B",
@@ -121,22 +65,78 @@
         ],
         "correct_answer": "B",
         "context_used": [
-            "uploads\\Formula1_2026_Overview.pdf_1",
-            "uploads\\Formula1_2026_Overview.pdf_0"
+            "uploads\\F1_Training_Dataset_Clean.pdf_0",
+            "uploads\\F1_Training_Dataset_Clean.pdf_2"
         ]
     },
     {
-        "question": "The 2026 Formula 1 cars are designed to be 'nimbler'. Which of the following is a key change in these cars compared to previous models?\na) Reduced weight to 768kg\nb) Longer wheelbase\nc) Introduction of X-Mode and Z-Mode aerodynamic systems\nd) Elimination of engine titles",
+        "question": "Which of the following statements is true about FIA's role in Formula 1?\nA) FIA establishes technical, sporting, and financial regulations for Formula 1.\nB) FIA only manages the logistics during competitions.\nC) FIA controls all aspects of car design and construction.\nD) FIA awards points to drivers based on their performance.",
         "options": [
-            "a",
-            "b",
-            "c",
-            "d"
+            "A",
+            "B",
+            "C",
+            "D"
         ],
-        "correct_answer": "c",
+        "correct_answer": "A",
         "context_used": [
-            "uploads\\Formula1_2026_Overview.pdf_1",
-            "uploads\\Formula1_2026_Overview.pdf_0"
+            "uploads\\F1_Training_Dataset_Clean.pdf_2",
+            "uploads\\F1_Training_Dataset_Clean.pdf_0"
+        ]
+    },
+    {
+        "question": "What does the 'Constructor Trophy' signify in Formula 1 competitions?\nA) It is awarded to the team with the highest total points accumulated by both of its cars over a season.\nB) It recognizes the best-performing driver individually across all teams.\nC) It rewards the team that has the most successful rookie drivers.\nD) It indicates the fastest qualifying time for constructors.",
+        "options": [
+            "A",
+            "B",
+            "C",
+            "D"
+        ],
+        "correct_answer": "A",
+        "context_used": [
+            "uploads\\F1_Training_Dataset_Clean.pdf_0",
+            "uploads\\F1_Training_Dataset_Clean.pdf_2"
+        ]
+    },
+    {
+        "question": "Which of the following is NOT a type of tyre compound used in F1 racing? (Given: Soft, Medium, Hard, Intermediate, Wet)",
+        "options": [
+            "Soft",
+            "Medium",
+            "Hard",
+            "Intermediate"
+        ],
+        "correct_answer": "D",
+        "context_used": [
+            "uploads\\F1_Training_Dataset_Clean.pdf_2",
+            "uploads\\F1_Training_Dataset_Clean.pdf_1"
+        ]
+    },
+    {
+        "question": "What is the maximum RPM allowed for an Internal Combustion Engine (ICE) in F1 according to the text provided?",
+        "options": [
+            "10,000 RPM",
+            "15,000 RPM",
+            "20,000 RPM",
+            "30,000 RPM"
+        ],
+        "correct_answer": "B",
+        "context_used": [
+            "uploads\\F1_Training_Dataset_Clean.pdf_2",
+            "uploads\\F1_Training_Dataset_Clean.pdf_1"
+        ]
+    },
+    {
+        "question": "Which of the following is a valid use case for Wet (Blue) tyres in F1 racing? \nA) High-speed corners on dry circuits\nB) Heavy rain with significant water accumulation on tracks\nC) Fastest qualifying laps\nD) Sprint race track conditions",
+        "options": [
+            "A",
+            "B",
+            "C",
+            "D"
+        ],
+        "correct_answer": "B",
+        "context_used": [
+            "uploads\\F1_Training_Dataset_Clean.pdf_2",
+            "uploads\\F1_Training_Dataset_Clean.pdf_1"
         ]
     }
 ]

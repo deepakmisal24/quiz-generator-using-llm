@@ -129,7 +129,7 @@ elif st.session_state.step == "CUSTOM_QUERY":
     st.title("🔍 Technical Query Assistant")
     st.write("Ask any specific question about the uploaded document.")
     
-    user_query = st.text_input("Enter your question (e.g., 'What is the MGU-K power output?')")
+    user_query = st.text_input("Enter your question (e.g., 'What is the F1?')")
     
     if st.button("Get Answer"):
         if user_query:

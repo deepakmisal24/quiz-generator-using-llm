@@ -36,8 +36,7 @@ def answer_custom_question(user_query):
     
     # 1. Search for the 3 most relevant chunks
     results = collection.query(
-        query_texts=[user_query],
-        n_results=3
+        query_texts=[user_query]
     )
     
     context = " ".join(results['documents'][0])
